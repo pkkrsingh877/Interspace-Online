@@ -3,8 +3,8 @@ const Post = require('../models/Post');
 // Controller to create a new post
 const createPost = async (req, res) => {
     try {
-        const { title, content, id } = req.body;
-        const newPost = new Post({ title, content, id });
+        const { title, content, userId } = req.body;
+        const newPost = new Post({ title, content, userId });
         await newPost.save();
         res.status(201).json(newPost);
     } catch (error) {
