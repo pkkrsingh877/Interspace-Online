@@ -24,3 +24,6 @@ Thumbs.db
 # Other files to ignore
 **/coverage/
 **/dist/
+
+# Pivate Files
+/backend/README.md
