@@ -4,6 +4,19 @@ const User = require('../models/User');
 const sendFriendRequest = async (req, res) => {
     try {
         const { friendUserId, userId } = req.body;
+
+        const user = await User.findById(userId);
+
+        // If They are already your friend
+        if (user.friends.includes(friendUserId)) {
+            return res.status(400).json({ message: 'User is already your friend' });
+        }
+
+        // If you have already sent them request
+        if (user.friendRequestSent.includes(friendUserId)) {
+            return res.status(400).json({ message: 'Friend request already sent' });
+        }
+
         await User.findByIdAndUpdate(
             userId,
             { $push: { friendRequestSent: friendUserId } },
@@ -26,13 +39,13 @@ const acceptFriendRequest = async (req, res) => {
         const { friendUserId, userId } = req.body;
         await User.findByIdAndUpdate(
             userId,
-            { $pop: { friendRequestSent: friendUserId } },
+            { $pull: { friendRequestSent: friendUserId } },
             { $push: { friends: friendUserId } },
             { new: true }
         )
         await User.findByIdAndUpdate(
             friendUserId,
-            { $pop: { friendRequestReceived: userId } },
+            { $pull: { friendRequestReceived: userId } },
             { $push: { friends: userId } },
             { new: true }
         )
@@ -48,12 +61,12 @@ const rejectFriendRequest = async (req, res) => {
         const { friendUserId, userId } = req.body;
         await User.findByIdAndUpdate(
             userId,
-            { $pop: { friendRequestSent: friendUserId } },
+            { $pull: { friendRequestSent: friendUserId } },
             { new: true }
         )
         await User.findByIdAndUpdate(
             friendUserId,
-            { $pop: { friendRequestReceived: userId } },
+            { $pull: { friendRequestReceived: userId } },
             { new: true }
         )
         res.status(201).json({ message: 'Success' });
@@ -68,12 +81,12 @@ const unfriend = async (req, res) => {
         const { friendUserId, userId } = req.body;
         await User.findByIdAndUpdate(
             userId,
-            { $pop: { friends: friendUserId } },
+            { $pull: { friends: friendUserId } },
             { new: true }
         )
         await User.findByIdAndUpdate(
             friendUserId,
-            { $pop: { friends: userId } },
+            { $pull: { friends: userId } },
             { new: true }
         )
         res.status(201).json({ message: 'Success' });
