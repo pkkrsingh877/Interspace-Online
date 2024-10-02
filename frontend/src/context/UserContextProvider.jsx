@@ -7,9 +7,10 @@ const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     // Signup function
-    const signup = async (name, email, password) => {
+    const signup = async (username, email, password) => {
         try {
-            const response = await axios.post('http://localhost:5000/api/signup', { name, email, password });
+            const response = await axios.post('http://localhost:5000/api/signup', { username, email, password });
+            console.log(response.data.user)
             setUser(response.data.user);
             localStorage.setItem('token', response.data.token);
         } catch (error) {
