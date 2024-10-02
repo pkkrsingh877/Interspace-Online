@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
+import UserContext from '../context/UserContext';
 
 const CreatePost = () => {
+    const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const { user } = useContext(UserContext);
 
     const handlePostSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/posts', { content });
+            console.log(user)
+            const userId = user._id;
+            const response = await axios.post('http://localhost:5000/api/posts', { title, content, userId });
             console.log('Post created:', response.data);
             // Redirect or show success message
         } catch (error) {
@@ -18,6 +23,13 @@ const CreatePost = () => {
     return (
         <form onSubmit={handlePostSubmit}>
             <h2>Create Post</h2>
+            <input
+                type="text"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+            />
             <textarea
                 placeholder="Write your post here..."
                 value={content}

@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const postRoutes = require('./routes/postRoutes');
 const authRoutes = require('./routes/authRoutes');
+require('dotenv').config()
 
 const app = express();
 const PORT = process.env.PORT || 5000;

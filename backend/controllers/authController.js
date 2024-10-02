@@ -1,6 +1,24 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
+// Route to verify token and get user info
+exports.verifyJwt = async (req, res) => {
+    try {
+        // Assuming the token has user ID, you can fetch user data from the database
+        const user = await User.findById(req.user.userId).select('-password'); // Exclude password from the user object
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // If the user is found and token is valid, return user data
+        res.json({ user });
+    } catch (error) {
+        console.error('Error verifying token:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 // Controller for user signup
 exports.signup = async (req, res) => {
     const { username, email, password } = req.body;
@@ -18,7 +36,7 @@ exports.signup = async (req, res) => {
 
         // Generate JWT token
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'your_jwt_secret', {
-            expiresIn: '1h',
+            expiresIn: '30d',
         });
 
         res.status(201).json({ token, user: { id: user._id, username, email } });
@@ -46,7 +64,7 @@ exports.login = async (req, res) => {
 
         // Generate JWT token
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'your_jwt_secret', {
-            expiresIn: '1h',
+            expiresIn: '30d',
         });
 
         res.status(200).json({ token, user: { id: user._id, username: user.username, email } });
