@@ -4,10 +4,8 @@ const User = require('../models/User');
 const sendFriendRequest = async (req, res) => {
     try {
         const { friendUserId, userId } = req.body;
-        console.log(req.body)
 
         const user = await User.findById(userId);
-        console.log(user)
 
         // If They are already your friend
         if (user.friends.includes(friendUserId)) {
@@ -42,15 +40,19 @@ const acceptFriendRequest = async (req, res) => {
         const { friendUserId, userId } = req.body;
         await User.findByIdAndUpdate(
             userId,
-            { $pull: { friendRequestSent: friendUserId } },
-            { $push: { friends: friendUserId } },
-            { new: true }
+            {
+                $pull: { friendRequestSent: friendUserId },
+                $push: { friends: friendUserId }
+            },
+            { new: true, upsert: true }
         )
         await User.findByIdAndUpdate(
             friendUserId,
-            { $pull: { friendRequestReceived: userId } },
-            { $push: { friends: userId } },
-            { new: true }
+            {
+                $pull: { friendRequestReceived: userId },
+                $push: { friends: userId }
+            },
+            { new: true, upsert: true }
         )
         res.status(201).json({ message: 'Success' });
     } catch (error) {
