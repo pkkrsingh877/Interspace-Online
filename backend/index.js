@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const postRoutes = require('./routes/postRoutes');
 const authRoutes = require('./routes/authRoutes');
+const friendRoutes = require('./routes/friendRoutes');
 require('dotenv').config()
 
 const app = express();
@@ -24,6 +25,7 @@ mongoose.connect(mongoURI)
 // Routes
 app.use('/api', postRoutes);
 app.use('/api', authRoutes);
+app.use('/api', friendRoutes);
 
 // Start the server
 app.listen(PORT, () => {

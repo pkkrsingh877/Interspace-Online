@@ -10,7 +10,6 @@ const UserContextProvider = ({ children }) => {
     const signup = async (username, email, password) => {
         try {
             const response = await axios.post('http://localhost:5000/api/signup', { username, email, password });
-            console.log(response.data.user)
             setUser(response.data.user);
             localStorage.setItem('token', response.data.token);
         } catch (error) {
@@ -46,9 +45,10 @@ const UserContextProvider = ({ children }) => {
                 .then(response => {
                     setUser(response.data.user);
                 })
-                .catch(() => {
+                .catch((err) => {
+                    console.log(err)
                     // Token might be expired or invalid
-                    // logout();
+                    logout();
                 });
         }
     }, []);

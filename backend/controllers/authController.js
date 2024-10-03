@@ -12,7 +12,7 @@ exports.verifyJwt = async (req, res) => {
         }
 
         // If the user is found and token is valid, return user data
-        res.json({ user });
+        res.status(201).json({ user: { id: req.user.userId, username: user.username, email: user.email } });
     } catch (error) {
         console.error('Error verifying token:', error);
         res.status(500).json({ message: 'Server error' });
@@ -22,7 +22,6 @@ exports.verifyJwt = async (req, res) => {
 // Controller for user signup
 exports.signup = async (req, res) => {
     const { username, email, password } = req.body;
-    console.log(req.body)
 
     try {
         // Check if user already exists
@@ -34,9 +33,6 @@ exports.signup = async (req, res) => {
         // Create new user
         const user = new User({ username, email, password });
         await user.save();
-        if (user) {
-            console.log(user)
-        }
 
         // Generate JWT token
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'your_jwt_secret', {

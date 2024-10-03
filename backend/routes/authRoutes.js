@@ -10,11 +10,10 @@ const verifyToken = (req, res, next) => {
     if (!token) {
         return res.status(401).json({ message: 'Access denied. No token provided.' });
     }
-    console.log(token);
+
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret'); // Verify the token with your JWT_SECRET
         req.user = decoded; // decoded will contain the user info encoded in the JWT
-        console.log(req.user);
         next();
     } catch (err) {
         console.log(err)

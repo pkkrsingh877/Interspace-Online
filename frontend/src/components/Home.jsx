@@ -15,7 +15,8 @@ const Home = () => {
             {user ? (
                 <p>
                     <strong>Username:</strong> {user.username}<br />
-                    <strong>Email:</strong> {user.email}
+                    <strong>Email:</strong> {user.email}<br />
+                    <strong>userId:</strong> {user.id}
                 </p>
             ) : (
                 <p>No user information available</p>

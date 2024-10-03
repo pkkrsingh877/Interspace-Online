@@ -4,13 +4,13 @@ const { sendFriendRequest, acceptFriendRequest, rejectFriendRequest, unfriend, f
 const router = express.Router();
 
 // Route for sending friend request
-router.post('/sendfriendreqest', sendFriendRequest);
+router.post('/sendfriendrequest', sendFriendRequest);
 
 // Route for accepting friend request
-router.post('/acceptfriendreqest', acceptFriendRequest);
+router.post('/acceptfriendrequest', acceptFriendRequest);
 
 // Route for rejecting friend request
-router.post('/rejectfriendreqest', rejectFriendRequest);
+router.post('/rejectfriendrequest', rejectFriendRequest);
 
 // Route for unfriending
 router.post('/unfriend', unfriend);
