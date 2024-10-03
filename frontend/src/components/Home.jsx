@@ -11,7 +11,6 @@ const Home = () => {
             <Link to="/signup">Signup</Link>
             <Link to="/posts">Posts</Link>
             <Link to="/posts/new">CreatePost</Link>
-            <Link to="/posts/{id}">Post</Link>
             {/* Check if user exists and then render the username and email */}
             {user ? (
                 <p>

@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import CreatePost from './components/CreatePost';
-import PostList from './components/PostList';
-import Post from './components/Post';
+import CreatePost from './components/posts/CreatePost';
+import PostList from './components/posts/PostList';
+import Post from './components/posts/Post';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/posts" element={<PostList />} />
         <Route path="/posts/new" element={<CreatePost />} />
-        <Route path="/post/{id}" element={<Post />} />
+        <Route path="/posts/:id" element={<Post />} />
       </Routes>
     </Router>
   );

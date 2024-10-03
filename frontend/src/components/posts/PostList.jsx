@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -19,8 +20,8 @@ const PostList = () => {
             <ul>
                 {posts ? (
                     posts.map((post) => (
-                        <div key={post.id}>
-                            <h4>{post.title}</h4>
+                        <div key={post._id}>
+                            <h4><Link to={`/posts/${post._id}`}>{post.title}</Link></h4>
                             <p>{post.content}</p>
                             <p>Created at {new Date(post.createdAt).toLocaleString()}</p>
                             <hr />
