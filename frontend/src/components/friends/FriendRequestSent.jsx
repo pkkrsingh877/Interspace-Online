@@ -1,28 +1,32 @@
-const FriendRequestSent = () => {
-    const [friends, setFriends] = useState([]);
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-    const fetchFriends = async () => {
-        const response = await axios.get('http://localhost:5000/api/friends');
-        setFriends(response.data);
+const FriendRequestSent = () => {
+    const [potentialFriends, setpotentialFriends] = useState([]);
+
+    const fetchpotentialFriends = async () => {
+        const response = await axios.get('http://localhost:5000/api/friendrequestsent');
+        setpotentialFriends(response.data);
     };
 
     useEffect(() => {
-        fetchFriends();
+        fetchpotentialFriends();
     }, []);
 
     return (
         <div>
-            <h2>Friends</h2>
+            <h2>Friend Requests Sent</h2>
             <ul>
-                {friends ? (
-                    friends.map((friend) => (
-                        <div key={friend._id}>
-                            <h4><Link to={`/friends/${friend._id}`}>{friend.username}</Link></h4>
+                {potentialFriends ? (
+                    potentialFriends.map((potentialFriend) => (
+                        <div key={potentialFriend._id}>
+                            <h4><Link to={`/friendRequestSent/${potentialFriend._id}`}>{potentialFriend.username}</Link></h4>
                             <hr />
                         </div>
                     ))
                 ) : (
-                    <p>No friends Available to view!</p>
+                    <p>You have not sent any friend requests.</p>
                 )}
             </ul>
         </div>
