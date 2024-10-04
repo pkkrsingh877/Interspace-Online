@@ -41,18 +41,18 @@ const acceptFriendRequest = async (req, res) => {
         await User.findByIdAndUpdate(
             userId,
             {
-                $pull: { friendRequestSent: friendUserId },
+                $pull: { friendRequestReceived: friendUserId },
                 $push: { friends: friendUserId }
             },
-            { new: true, upsert: true }
+            { new: true }
         )
         await User.findByIdAndUpdate(
             friendUserId,
             {
-                $pull: { friendRequestReceived: userId },
+                $pull: { friendRequestSent: userId },
                 $push: { friends: userId }
             },
-            { new: true, upsert: true }
+            { new: true }
         )
         res.status(201).json({ message: 'Success' });
     } catch (error) {
@@ -64,18 +64,20 @@ const acceptFriendRequest = async (req, res) => {
 const rejectFriendRequest = async (req, res) => {
     try {
         const { friendUserId, userId } = req.body;
+
         await User.findByIdAndUpdate(
             userId,
-            { $pull: { friendRequestSent: friendUserId } },
+            { $pull: { friendRequestReceived: friendUserId } },
             { new: true }
         )
         await User.findByIdAndUpdate(
             friendUserId,
-            { $pull: { friendRequestReceived: userId } },
+            { $pull: { friendRequestSent: userId } },
             { new: true }
         )
         res.status(201).json({ message: 'Success' });
     } catch (error) {
+        console.error(error)
         res.status(500).json({ message: error.message });
     }
 };
