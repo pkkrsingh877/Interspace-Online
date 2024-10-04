@@ -13,7 +13,7 @@ const CreatePost = () => {
         e.preventDefault();
         try {
             console.log(user)
-            const userId = user._id;
+            const userId = user.id;
             const response = await axios.post('http://localhost:5000/api/posts', { title, content, userId });
             console.log('Post created:', response.data);
             // Redirect or show success message

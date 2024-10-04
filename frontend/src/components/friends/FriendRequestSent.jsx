@@ -12,7 +12,7 @@ const FriendRequestSent = () => {
 
     useEffect(() => {
         fetchpotentialFriends();
-    }, []);
+    }, [potentialFriends]);
 
     return (
         <div>

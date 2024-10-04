@@ -5,6 +5,10 @@ import Login from './components/Login';
 import CreatePost from './components/posts/CreatePost';
 import PostList from './components/posts/PostList';
 import Post from './components/posts/Post';
+import Friends from './components/friends/Friends';
+import FriendRequestSent from './components/friends/FriendRequestSent';
+import FriendRequestReceived from './components/friends/FriendRequestReceived';
+import SearchFriends from './components/friends/SearchFriends';
 
 function App() {
   return (
@@ -16,6 +20,10 @@ function App() {
         <Route path="/posts" element={<PostList />} />
         <Route path="/posts/new" element={<CreatePost />} />
         <Route path="/posts/:id" element={<Post />} />
+        <Route path="/friends" element={<Friends />} />
+        <Route path="/friends/request/sent" element={<FriendRequestSent />} />
+        <Route path="/friends/request/received" element={<FriendRequestReceived />} />
+        <Route path="/friends/search" element={<SearchFriends />} />
       </Routes>
     </Router>
   );

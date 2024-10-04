@@ -102,15 +102,25 @@ const unfriend = async (req, res) => {
     }
 };
 
-// Controller to View All Friends
-const friends = async (req, res) => {
+// Controller to List all Users
+const potentialFriends = async (req, res) => {
     try {
-        const { userId } = req.body;
-        const user = await User.findById(userId)
-        res.status(201).json(user.friends);
+        const potentialFriends = await User.find({});
+        res.status(201).json(potentialFriends);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
-module.exports = { sendFriendRequest, acceptFriendRequest, rejectFriendRequest, unfriend, friends };
+// Controller to View All Friends
+const friends = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.find({ _id: id });
+        res.status(201).json({ user });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { potentialFriends, sendFriendRequest, acceptFriendRequest, rejectFriendRequest, unfriend, friends };

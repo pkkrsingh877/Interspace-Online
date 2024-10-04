@@ -1,4 +1,4 @@
-const SeachFriends = () => {
+const SearchFriends = () => {
     return (
         <div>
             Search Friends
@@ -6,4 +6,4 @@ const SeachFriends = () => {
     );
 }
 
-export default SeachFriends;
+export default SearchFriends;
