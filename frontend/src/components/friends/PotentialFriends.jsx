@@ -43,6 +43,7 @@ const PotentialFriends = () => {
                         <div key={potentialFriend._id}>
                             <h4><Link to={`/friends/${potentialFriend._id}`}>{potentialFriend.username}</Link></h4>
                             <button type="submit" onClick={() => handleSendFriendRequest(user.id, potentialFriend._id)}>Add Friend</button>
+                            <Link to={`/chat/${potentialFriend._id}`}>Chat</Link>
                             <hr />
                         </div>
                     ))

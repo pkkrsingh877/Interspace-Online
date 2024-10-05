@@ -9,6 +9,7 @@ import Friends from './components/friends/Friends';
 import FriendRequestSent from './components/friends/FriendRequestSent';
 import FriendRequestReceived from './components/friends/FriendRequestReceived';
 import SearchFriends from './components/friends/SearchFriends';
+import Chat from './components/messages/Chat';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/friends/request/sent" element={<FriendRequestSent />} />
         <Route path="/friends/request/received" element={<FriendRequestReceived />} />
         <Route path="/friends/search" element={<SearchFriends />} />
+        <Route path="/chat/:recipient" element={<Chat />} />
       </Routes>
     </Router>
   );
