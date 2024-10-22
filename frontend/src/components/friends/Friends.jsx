@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import PotentialFriends from './PotentialFriends';
+import FriendRequestReceived from './FriendRequestReceived';
+import FriendRequestSent from './FriendRequestSent';
 
 const Friends = () => {
     const [friends, setFriends] = useState([]);
@@ -12,6 +14,7 @@ const Friends = () => {
         try {
             if (user) {
                 const response = await axios.get(`http://localhost:5000/api/friends/${user.id}`);
+                console.log(response.data)
                 setFriends(response.data);
             }
         } catch (error) {
@@ -39,6 +42,8 @@ const Friends = () => {
                 )}
             </ul>
             <PotentialFriends />
+            <FriendRequestReceived />
+            <FriendRequestSent />
         </div>
     );
 }

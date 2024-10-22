@@ -1,27 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import UserContext from '../../context/UserContext';
 
 const FriendRequestSent = () => {
-    const [potentialFriends, setpotentialFriends] = useState([]);
+    const [friendRequestsSent, setFriendRequestsSent] = useState([]);
+    const { user } = useContext(UserContext);
 
-    const fetchpotentialFriends = async () => {
-        const response = await axios.get('http://localhost:5000/api/friendrequestsent');
-        setpotentialFriends(response.data);
+    const fetchFriendRequestsSent = async () => {
+        if (user) {
+            try {
+                const response = await axios.get(`http://localhost:5000/api/friendrequestsent?user=${user.id}`);
+                setFriendRequestsSent(response.data);
+            } catch (error) {
+                console.error("Error fetching friend requests sent:", error);
+            }
+        }
     };
 
     useEffect(() => {
-        fetchpotentialFriends();
-    }, [potentialFriends]);
+        fetchFriendRequestsSent();
+    }, [user]);
 
     return (
         <div>
             <h2>Friend Requests Sent</h2>
             <ul>
-                {potentialFriends ? (
-                    potentialFriends.map((potentialFriend) => (
-                        <div key={potentialFriend._id}>
-                            <h4><Link to={`/friendRequestSent/${potentialFriend._id}`}>{potentialFriend.username}</Link></h4>
+                {friendRequestsSent.length > 0 ? (
+                    friendRequestsSent.map((request) => (
+                        <div key={request._id}>
+                            <h4><Link to={`/friendRequestSent/${request._id}`}>{request.username}</Link></h4>
                             <hr />
                         </div>
                     ))

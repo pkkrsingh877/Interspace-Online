@@ -10,7 +10,7 @@ const PotentialFriends = () => {
     const fetchPotentialFriends = async () => {
         try {
             if (user) {
-                const response = await axios.get(`http://localhost:5000/api/potentialfriends`);
+                const response = await axios.get(`http://localhost:5000/api/potentialfriends?currentUserId=${user.id}`);
                 console.log(response.data)
                 setPotentialFriends(response.data);
             }
@@ -28,6 +28,11 @@ const PotentialFriends = () => {
             if (user) {
                 const response = await axios.post(`http://localhost:5000/api/sendFriendRequest`, { userId, potentialFriendId });
                 console.log(response.data)
+
+                // Filter out the friend to whom request was sent
+                setPotentialFriends((prevPotentialFriends) =>
+                    prevPotentialFriends.filter(friend => friend._id !== potentialFriendId)
+                );
             }
         } catch (error) {
             console.error(error);

@@ -1,16 +1,16 @@
 const express = require('express');
-const { sendFriendRequest, acceptFriendRequest, rejectFriendRequest, unfriend, friends, potentialFriends } = require('../controllers/friendController');
+const { sendFriendRequest, acceptFriendRequest, rejectFriendRequest, unfriend, friends, potentialFriends, friendRequestReceived, friendRequestSent } = require('../controllers/friendController');
 
 const router = express.Router();
 
 // Route for sending friend request
-router.post('/sendfriendrequest', sendFriendRequest);
+router.post('/sendFriendRequest', sendFriendRequest);
 
 // Route for accepting friend request
-router.post('/acceptfriendrequest', acceptFriendRequest);
+router.post('/acceptFriendRequest', acceptFriendRequest);
 
 // Route for rejecting friend request
-router.post('/rejectfriendrequest', rejectFriendRequest);
+router.post('/rejectFriendRequest', rejectFriendRequest);
 
 // Route for unfriending
 router.post('/unfriend', unfriend);
@@ -19,6 +19,12 @@ router.post('/unfriend', unfriend);
 router.get('/friends/:id', friends);
 
 // Route for listing potential friends
-router.get('/potentialfriends', potentialFriends);
+router.get('/potentialFriends', potentialFriends);
+
+// Route for listing potential friends
+router.get('/friendRequestReceived', friendRequestReceived);
+
+// Route for listing potential friends
+router.get('/friendRequestSent', friendRequestSent);
 
 module.exports = router;
