@@ -39,6 +39,7 @@ const sendFriendRequest = async (req, res) => {
 const acceptFriendRequest = async (req, res) => {
     try {
         const { friendUserId, userId } = req.body;
+        console.log(friendUserId, userId)
         await User.findByIdAndUpdate(
             userId,
             {
@@ -164,8 +165,12 @@ const friendRequestSent = ('/api/friendrequestsent', async (req, res) => {
 const friends = async (req, res) => {
     try {
         const { id } = req.params;
-        const user = await User.find({ _id: id });
-        res.status(201).json({ user });
+        const user = await User.findById(id).populate('friends');
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(user.friends);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

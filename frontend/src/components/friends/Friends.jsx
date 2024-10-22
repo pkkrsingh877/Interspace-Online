@@ -14,6 +14,7 @@ const Friends = () => {
         try {
             if (user) {
                 const response = await axios.get(`http://localhost:5000/api/friends/${user.id}`);
+                console.log(response.data)
                 setFriends(response.data);
             }
         } catch (error) {
