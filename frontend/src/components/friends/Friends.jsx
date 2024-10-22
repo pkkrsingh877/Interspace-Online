@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import PotentialFriends from './PotentialFriends';
+import FriendRequestReceived from './FriendRequestReceived';
+import FriendRequestSent from './FriendRequestSent';
 
 const Friends = () => {
     const [friends, setFriends] = useState([]);
@@ -39,6 +41,8 @@ const Friends = () => {
                 )}
             </ul>
             <PotentialFriends />
+            <FriendRequestReceived />
+            <FriendRequestSent />
         </div>
     );
 }

@@ -132,6 +132,33 @@ const potentialFriends = async (req, res) => {
     }
 };
 
+const friendRequestReceived = ('/api/friendrequestreceived', async (req, res) => {
+    // Extract userId from query
+    const userId = req.query.user;
+
+    try {
+        // Query to find friend requests received
+        const user = await User.findById(userId).populate('friendRequestReceived');
+        const friendRequests = user.friendRequestReceived;
+        res.status(200).json(friendRequests);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Backend route to get friend requests sent by the user
+const friendRequestSent = ('/api/friendrequestsent', async (req, res) => {
+    const userId = req.query.user;
+
+    try {
+        const user = await User.findById(userId).populate('friendRequestSent');
+        const sentRequests = user.friendRequestSent;
+        res.status(200).json(sentRequests);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 // Controller to View All Friends
 const friends = async (req, res) => {
@@ -144,4 +171,4 @@ const friends = async (req, res) => {
     }
 };
 
-module.exports = { potentialFriends, sendFriendRequest, acceptFriendRequest, rejectFriendRequest, unfriend, friends };
+module.exports = { potentialFriends, sendFriendRequest, acceptFriendRequest, rejectFriendRequest, unfriend, friends, friendRequestReceived, friendRequestSent };
